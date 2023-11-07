@@ -1,7 +1,7 @@
 <template>
     <div class="thumblist">
-        <div class="projectThumb" v-for="slide in project.slides">
-            {{ slide.name }}
+        <div class="projectThumb" v-for="slide in project.slides" @click="$emit('onSlideSelect',slide.num)">
+            {{ slide.title }}
         </div>
     </div>
 </template>
@@ -9,7 +9,8 @@
 
 <script>
 export default {
-    props: ["project"]
+    props: ["project"],
+    emits:["onSlideSelect"]
 }
 </script>
 
