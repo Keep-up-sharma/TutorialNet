@@ -4,16 +4,15 @@
     <div id="google_translate_element"></div>
     <div id="content">
 
-      <aside>{{ project.name }}
+      <aside>{{ project.title }}
         <ThumbList :project=project @onSlideSelect="(i) => activeSlide = i" />
       </aside>
 
       <div id="slidesCrousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div v-for="slide in project.slides" class="carousel-item" :class="{ 'active': (slide.id == activeSlide) }"
+          <div v-for="slide in project.slides" class="carousel-item" :class="{ 'active': (slide.num == activeSlide) }"
             data-bs-interval="100000">
-            <Slide @speakingDone="
-                                                    if (slide.id != project.slides.length - 1) {
+            <Slide @speakingDone="if (slide.id != project.slides.length - 1) {
               activeSlide++;
 
 
@@ -32,52 +31,23 @@ import ThumbList from "../components/ThumbList.vue";
 export default {
   components: { ThumbList, Slide },
   props: ['id'],
+  methods: {
+    async getData() {
+      const res = await fetch(this.host + "/getProject.php?id=" + this.id);
+      const project = await res.json();
+      this.project = project;
+      console.log(project);
+    }
+  },
   data() {
+    this.getData();
     return {
       'project':
       {
-        "name": "Tennis Basics",
-        "slides": [
-          {
-            "id": 0,
-            'title': "duh",
-            "text": "Tennis is a popular racket sport that can be played individually against a single opponent (singles) or in teams of two players each (doubles). The game is played on a rectangular court with a net in the middle."
-          },
-          {
-            "id": 1,
-            'title': "duh",
-            "text": "The players use tennis rackets strung with cord to hit a hollow rubber ball covered with felt. The objective is to hit the ball over or around the net and into the opponent's court in a way that the opponent cannot return it properly."
-          },
-          {
-            "id": 2,
-            'title': "duh",
-            "text": "Scoring in tennis is done using a system of points, games, and sets. A player or team must win a set by winning at least six games with a two-game advantage. To win a game, a player must score four points with a two-point advantage."
-          },
-          {
-            "id": 3,
-            'title': "duh",
-            "text": "Tennis is known for its different playing surfaces, such as grass, clay, and hard court. Each surface influences the speed and bounce of the ball, affecting the playing style and strategy."
-          },
-          {
-            "id": 4,
-            'title': "duh",
-            "text": "The four major tennis tournaments, known as Grand Slam events, are the Australian Open, French Open, Wimbledon, and the US Open. These tournaments attract the world's best tennis players and have a rich history of competition and tradition."
-          },
-          {
-            "id": 5,
-            'title': "duh",
-            "text": "In doubles, two players on each team take turns hitting the ball. Communication and teamwork are crucial for success in doubles play. Players need to cover the court efficiently and coordinate their movements."
-          },
-          {
-            "id": 6,
-            'title': "duh",
-            "text": "Tennis requires a combination of physical fitness, skill, and mental toughness. Players need to be agile, have good hand-eye coordination, and make strategic decisions during the match."
-          }
-        ]
       }
       ,
 
-      "activeSlide": 0
+      "activeSlide": 1
 
     }
   }

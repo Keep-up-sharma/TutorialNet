@@ -1,6 +1,6 @@
 <template>
     <div class="slide translate" ref="thisSlide" @click="speak">
-        {{ slide.text }}
+        {{ slide.content }}
     </div>
 </template>
 
