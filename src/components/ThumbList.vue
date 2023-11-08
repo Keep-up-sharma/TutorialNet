@@ -1,6 +1,6 @@
 <template>
     <div class="thumblist">
-        <div class="projectThumb" v-for="slide in project.slides" @click="$emit('onSlideSelect',slide.num)">
+        <div class="projectThumb" v-for="slide in project.slides" data-bs-target="#slidesCrousel" :data-bs-slide-to="slide.id">
             {{ slide.title }}
         </div>
     </div>
