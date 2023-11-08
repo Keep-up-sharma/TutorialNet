@@ -1,9 +1,9 @@
 <template>
+  <HomeNavBar />
   <div id="app">{{ id }} lol</div>
   <main class="notranslate">
     <div id="google_translate_element"></div>
     <div id="content">
-
       <aside>{{ project.title }}
         <ThumbList :project=project @onSlideSelect="(i) => activeSlide = i" />
       </aside>
@@ -28,15 +28,17 @@
 <script>
 import Slide from "../components/Slide.vue";
 import ThumbList from "../components/ThumbList.vue";
+import HomeNavBar from '../components/HomeNavBar.vue'
 export default {
-  components: { ThumbList, Slide },
-  props: ['id'],
+  components: { ThumbList, Slide, HomeNavBar },
   methods: {
     async getData() {
-      const res = await fetch(this.host + "/getProject.php?id=" + this.id);
+      const res = await fetch(this.host + "/getProject.php?id=" + this.$route.query.id);
       const project = await res.json();
+      if (!project['id']||project['title']!=this.$route.query.title.replace('-',' ')) {
+        this.$router.push('/404')
+      }
       this.project = project;
-      console.log(project);
     }
   },
   data() {
