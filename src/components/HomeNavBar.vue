@@ -1,4 +1,5 @@
 <template>
+    <LoginForm />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">TutorialNet</a>
@@ -29,7 +30,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -43,7 +44,10 @@
 </template>
 
 <script>
+import LoginForm from './LoginForm.vue';
 export default {
     emits: ["search"]
+    , 
+    components: {LoginForm}
 }
 </script>
