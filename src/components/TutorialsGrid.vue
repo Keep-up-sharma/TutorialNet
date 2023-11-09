@@ -1,4 +1,5 @@
 <template>
+
   <ul id="catPills" class="nav nav-pills">
     <li class="nav-item">
       <a class="nav-link" :class="{ active: selectedCategory == 'all' }" @pointerup="() => selectedCategory = 'all'"
@@ -39,7 +40,7 @@
           data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn primary-btn"
           @click="() => delId = project.id">✖️</button></div>
       <img
-        :src="project.thumbnailUrl.length > 0 ? (project.thumbnailUrl) : ('https://picsum.photos/200/200?rand=' + Math.random())"
+        :src="project.thumbnailUrl.length > 0 ? (this.host+'/'+project.thumbnailUrl) : ('https://picsum.photos/200/200?rand=' + Math.random())"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ project.title }}</h5>

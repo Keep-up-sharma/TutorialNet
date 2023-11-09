@@ -1,4 +1,5 @@
 <template>
+    <CreateProjectForm />
     <LoginForm @login="$emit('login')" />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -18,7 +19,8 @@
                             Hi <div id="username">{{ name }}</div>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Add Tutorial</a></li>
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#projectModal" href="#">Add
+                                    Tutorial</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -30,7 +32,7 @@
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     </li>
                 </ul>
-                
+
             </div>
         </div>
     </nav>
@@ -38,10 +40,11 @@
 
 <script>
 import LoginForm from './LoginForm.vue';
+import CreateProjectForm from './CreateProjectForm.vue';
 export default {
-    emits: ["search","login"]
+    emits: ["search", "login"]
     ,
-    components: { LoginForm },
+    components: { LoginForm, CreateProjectForm },
     props: ['loggedIn',
         'name',
         'username',
@@ -71,7 +74,7 @@ export default {
     margin: 4px;
 }
 
-#username{
+#username {
     display: inline;
 }
 </style>
