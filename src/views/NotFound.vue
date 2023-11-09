@@ -1,5 +1,4 @@
 <template>
-    <HomeNavBar/>
     <div class="position-absolute top-50 start-50 translate-middle" id="notFound">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="470" height="290"
             viewBox="0 0 470 290">

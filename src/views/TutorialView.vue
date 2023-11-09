@@ -1,5 +1,4 @@
 <template>
-  <HomeNavBar />
   <div id="app">{{ id }} lol</div>
   <main class="notranslate">
     <div id="google_translate_element"></div>
@@ -35,22 +34,20 @@ export default {
     async getData() {
       const res = await fetch(this.host + "/getProject.php?id=" + this.$route.query.id);
       const project = await res.json();
-      if (!project['id']||project['title']!=this.$route.query.title.replace('-',' ')) {
+      if (!project['id'] || project['title'] != this.$route.query.title.replace('-', ' ')) {
         this.$router.push('/404')
       }
       this.project = project;
-    }
-  },
-  data() {
-    this.getData();
-    return {
-      'project':
-      {
+    },
+    data() {
+      this.getData();
+      return {
+        'project':
+        {
+        },
+        "activeSlide": 1
+
       }
-      ,
-
-      "activeSlide": 1
-
     }
   }
 }

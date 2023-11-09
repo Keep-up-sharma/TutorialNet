@@ -1,5 +1,5 @@
 <template>
-    <LoginForm />
+    <LoginForm @login="$emit('login')" />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">TutorialNet</a>
@@ -12,32 +12,25 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#" @click="() => $router.push('/')">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown Hi" v-if="loggedIn">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                            Hi <div id="username">{{ name }}</div>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Add Tutorial</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" @click="logout" href="#">Logout</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="!loggedIn" class="nav-item">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search"
-                        @input="(e) => { $emit('search', e.target.value) }" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                
             </div>
         </div>
     </nav>
@@ -46,8 +39,39 @@
 <script>
 import LoginForm from './LoginForm.vue';
 export default {
-    emits: ["search"]
-    , 
-    components: {LoginForm}
+    emits: ["search","login"]
+    ,
+    components: { LoginForm },
+    props: ['loggedIn',
+        'name',
+        'username',
+        'email'],
+
+    methods: {
+        deleteAllCookies() {
+            const cookies = document.cookie.split(";");
+
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        },
+        logout() {
+            this.deleteAllCookies();
+            this.loggedIn = false;
+            location.reload();
+        }
+    }
 }
 </script>
+<style>
+.Hi.nav-item {
+    margin: 4px;
+}
+
+#username{
+    display: inline;
+}
+</style>

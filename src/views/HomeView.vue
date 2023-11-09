@@ -1,5 +1,9 @@
 <template>
-  <HomeNavBar @search="(value) => filterQuery = value" />
+  <form class="d-flex">
+    <input class="form-control me-2" type="search" placeholder="Search" @input="(e) => { filterQuery = e.target.value }"
+      aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
   <TutorialsGrid :filterQuery="filterQuery"></TutorialsGrid>
 </template>
 
@@ -15,4 +19,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped> form{
+  max-width: 250px;
+  position: fixed;
+  top: 15px;
+  right: 100px;
+}</style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" ref="dialog"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content"><!-- Pills navs -->
@@ -23,7 +23,7 @@
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <input type="email" id="loginName" class="form-control" />
-                                <label class="form-label" for="loginName">Username</label>
+                                <label class="form-label" for="loginName">Email</label>
                             </div>
 
                             <!-- Password input -->
@@ -46,6 +46,7 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-md-6 d-flex justify-content-center">
                                     <!-- Simple link -->
                                     <a href="#!">Forgot password?</a>
@@ -53,7 +54,8 @@
                             </div>
 
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-4" @click="login">Sign in</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-4" @click.prevent="login">Sign
+                                in</button>
 
 
                         </form>
@@ -92,6 +94,13 @@
                                 <label class="form-label" for="registerRepeatPassword">Repeat password</label>
                             </div>
 
+                            <div v-if="loginError" class="alert alert-danger">
+                                Username Taken, try a new one.
+                            </div>
+                            <div v-if="passError" class="alert alert-danger">
+                                The passwords do not match, try again
+                            </div>
+
                             <!-- Checkbox -->
                             <div class="form-check d-flex justify-content-center mb-4">
                                 <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
@@ -117,7 +126,7 @@
 <script>
 export default {
     emits: ['login'],
-    data() { return { 'loginError': false } },
+    data() { return { 'loginError': false, 'passError': false } },
 
     methods: {
         setCookie(cname, cvalue, exdays) {
@@ -125,31 +134,43 @@ export default {
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             let expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-            console.log(document.cookie)
         },
         async login() {
-            const username = document.getElementById("loginName").value;
+            const email = document.getElementById("loginName").value;
             const pass = document.getElementById("loginPassword").value;
             var url = this.host + "/checkCredentials.php";
             var formData = new FormData();
-            formData.append('username', username);
+            formData.append('email', email);
             formData.append('password', pass);
+            try {
 
-            let res = await fetch(url, { method: 'POST', body: formData, credentials: "include" });
-            console.log((res.cookies));
-            const json = await res.json();
-            if (json['result'] != 'success') { this.loginError = true; } else {
-                this.loginError = false;
-                this.setCookie('PHPSESSID', json['session'], 1);
-                this.$emit('login')
+                let res = await fetch(url, { method: 'POST', body: formData, credentials: "include" });
+                const json = await res.json();
+                if (json['result'] != 'success') { this.loginError = true; } else {
+                    this.loginError = false;
+                    this.setCookie('PHPSESSID', json['session'], 1);
+                    this.$emit('login')
+                    this.$refs.dialog.classList.remove('show');
+                    location.reload();
+                }
+            } catch (error) {
+                this.loginError = true;
+
             }
+
 
 
         },
 
         async register() {
+            this.passError = false;
             const username = document.getElementById("registerUsername").value;
             const pass = document.getElementById("registerPassword").value;
+            const passRepeat = document.getElementById("registerRepeatPassword").value;
+            if (pass != passRepeat) {
+                this.passError = true;
+                return;
+            }
             const email = document.getElementById("registerEmail").value;
             const name = document.getElementById("registerName").value;
             var url = this.host + "/createUser.php";
@@ -161,6 +182,15 @@ export default {
 
             let res = await fetch(url, { method: 'POST', body: formData, credentials: "include" });
             const json = await res.json();
+            if (json['result'] != 'success') { this.loginError = true; } else {
+                this.loginError = false;
+                this.setCookie('PHPSESSID', json['session'], 1);
+                this.$emit('login')
+                this.$refs.dialog.classList.remove('show');
+                location.reload();
+            }
+
+
 
 
 

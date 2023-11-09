@@ -6,13 +6,39 @@ import "bootstrap"
 // document.getElementById(':0.container').contentWindow.document.getElementsByClassName("VIpgJd-ZVi9od-TvD9Pc-hSRGPd")[0].remove()
 
 </script>
+
+<script>
+import HomeNavBar from './components/HomeNavBar.vue'
+export default {
+  components: { HomeNavBar },
+  methods: {
+    async setUserData() {
+
+      const res = await fetch(this.host + '/getUserInfo.php', { 'credentials': 'include' });
+      const json = await res.json();
+      this.name = json.name;
+      this.email = json.email;
+      this.username = json.username;
+      this.loggedIn = true;
+      window.username = this.username;
+    }
+  },
+  data() {
+    if (document.cookie) this.setUserData();
+    return {
+       'loggedIn': false,
+      'name': '',
+      'username': '',
+      'email': '',
+
+    }
+  }
+}
+</script>
 <template>
   <header>
     
-    <!-- <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-    </nav> -->
+  <HomeNavBar :name="name" :email="email" :username="username" :loggedIn="loggedIn" @login="setUserData"/>
   </header>
   
   <RouterView />
