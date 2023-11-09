@@ -1,4 +1,5 @@
 <template>
+  <EditProjectForm :project="currProject" />
 
   <ul id="catPills" class="nav nav-pills">
     <li class="nav-item">
@@ -36,11 +37,11 @@
     <div
       v-for="project in projects.filter((project) => ((project.category == selectedCategory) || (selectedCategory == 'all')) && JSON.stringify(project).toLocaleLowerCase().includes(filterQuery.toLocaleLowerCase()))"
       class="card tutorialCard" style="width: 18rem;">
-      <div v-if="username == project.creator" class="modifyButtons"><button class="btn primary-btn">✏️</button><button
+      <div v-if="username == project.creator" class="modifyButtons"><button class="btn primary-btn" @click="currProject = project" data-bs-toggle="modal" data-bs-target="#projectEditModal">✏️</button><button
           data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn primary-btn"
           @click="() => delId = project.id">✖️</button></div>
       <img
-        :src="project.thumbnailUrl.length > 0 ? (this.host+'/'+project.thumbnailUrl) : ('https://picsum.photos/200/200?rand=' + Math.random())"
+        :src="project.thumbnailUrl.length > 0 ? (this.host + '/' + project.thumbnailUrl) : ('https://picsum.photos/200/200?rand=' + Math.random())"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ project.title }}</h5>
@@ -60,7 +61,7 @@
 </template>
 
 <script>
-
+import EditProjectForm from './EditProjectForm.vue';
 export default {
   data() {
     this.getData();
@@ -70,8 +71,10 @@ export default {
       'loggedIn': document.cookie ? true : false,
       'username': '',
       'delId': '',
+      'currProject':{}
     }
   },
+  components: { EditProjectForm },
   props: ["filterQuery"],
   methods: {
     goToProject(id) {
