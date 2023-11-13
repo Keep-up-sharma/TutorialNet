@@ -1,6 +1,5 @@
 <template>
   <EditProjectForm :project="currProject" />
-
   <ul id="catPills" class="nav nav-pills">
     <li class="nav-item">
       <a class="nav-link" :class="{ active: selectedCategory == 'all' }" @pointerup="() => selectedCategory = 'all'"
@@ -46,7 +45,7 @@
 
   <div class="notranslate row tutorialsGrid">
     <div
-      v-for="project in projects.filter((project) => ((project.category == selectedCategory) || (selectedCategory == 'all')) && JSON.stringify(project).toLocaleLowerCase().includes(filterQuery.toLocaleLowerCase()))"
+      v-for="project in projects.filter((project) => ((project.category == selectedCategory) || (selectedCategory == 'all')))"
       class="card tutorialCard" style="width: 18rem;">
       <div v-if="username == project.creator" class="modifyButtons"><button class="btn primary-btn"
           @click="currProject = project" data-bs-toggle="modal" data-bs-target="#projectEditModal">✏️</button><button
@@ -71,24 +70,37 @@
       </div>
     </div>
   </div>
+
+  <div v-if="projects.length > 0">
+    <ProjectPages :totalLength="projects[0].total" @page-change="(l, o) => {
+      limit = l;
+      offset = o;
+      getData();
+    }" />
+  </div>
 </template>
 
 <script>
+import { offset } from '@popperjs/core';
 import EditProjectForm from './EditProjectForm.vue';
+import ProjectPages from './ProjectPages.vue';
 export default {
+  beforeMount() { this.getData(); },
   data() {
-    this.getData();
     return {
       'projects': [],
       'selectedCategory': 'all',
       'loggedIn': document.cookie ? true : false,
       'username': '',
       'delId': '',
-      'currProject': {}
+      'currProject': {},
+      'limit': 5,
+      'offset': 0,
     }
   },
-  components: { EditProjectForm },
+  components: { EditProjectForm, ProjectPages },
   props: ["filterQuery"],
+  watch: { filterQuery: 'getData' },
   methods: {
     goToProject(id) {
       this.$router.push({
@@ -141,7 +153,7 @@ export default {
       }
     },
     async getData(sortBy) {
-      const res = await fetch(this.host + ((sortBy != undefined) ? ("/getProjectsInfo.php?sortby=" + sortBy) : ("/getProjectsInfo.php")));
+      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit}&offset=${this.offset}${this.filterQuery && '&filter=%' + this.filterQuery+'%'}`);
       const projects = await res.json();
       this.projects = projects;
       this.username = document.getElementById('username') && document.getElementById('username').innerText;
@@ -161,7 +173,7 @@ export default {
   margin-bottom: auto;
 }
 
-.tutorialCard img{
+.tutorialCard img {
   margin: auto;
   margin-top: 10px;
   border: 1px solid grey;
