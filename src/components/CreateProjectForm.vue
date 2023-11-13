@@ -1,5 +1,5 @@
 <template>
-    <!-- Modal -->
+  <!-- Modal -->
   <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -8,7 +8,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form :action='this.host+"/addProject.php"' method="post" enctype="multipart/form-data">
+          <form :action='this.host + "/addProject.php"' method="post" enctype="multipart/form-data">
             <div class="mb-3">
               <label for="title" class="form-label">Title</label>
               <input type="text" class="form-control" id="title" name="title">
@@ -16,6 +16,12 @@
             <div class="mb-3">
               <label for="description" class="form-label">Description</label>
               <textarea class="form-control" id="description" name="description"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Category </label>
+              <select name="category" class="form-select" id="category">
+                <option v-for="cat in categories" :value="cat.name">{{ cat.name }}</option>
+              </select>
             </div>
             <div class="mb-3">
               <label for="thumbnail" class="form-label">Thumbnail</label>
@@ -30,5 +36,21 @@
       </div>
     </div>
   </div>
-  
 </template>
+
+<script>
+export default {
+  data() {
+    this.getCats();
+    return { 'categories': [] }
+  },
+
+  methods: {
+    async getCats() {
+      let res = await fetch(this.host + '/' + 'getCategories.php');
+      let json = await res.json();
+      this.categories = json;
+    }
+  }
+}
+</script>
