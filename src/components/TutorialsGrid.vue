@@ -32,6 +32,17 @@
     </div>
   </div>
 
+  <div class="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+      Sort
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" @click="sortProjects('date')" href="#">Date (Newest first)</a></li>
+      <li><a class="dropdown-item" @click="sortProjects('creator')" href="#">Creator (Ascending)</a></li>
+      <li><a class="dropdown-item" @click="sortProjects('name')" href="#">Name (Ascending)</a></li>
+    </ul>
+  </div>
+
 
   <div class="notranslate row tutorialsGrid">
     <div
@@ -42,10 +53,11 @@
           data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn primary-btn"
           @click="() => delId = project.id">✖️</button></div>
       <img
-        :src="project.thumbnailUrl.length > 0 ? (this.host + '/' + project.thumbnailUrl) : ('https://picsum.photos/200/200?rand=' + Math.random())"
+        :src="project.thumbnailUrl.length > 0 ? (this.host + '/' + project.thumbnailUrl) : ('https://th.bing.com/th/id/R.d2ee4e314afa093265091bd73479f158?rik=fMXBIB231vht0g&riu=http%3a%2f%2fwww.kreilkamp.com%2fwp-content%2fuploads%2f2016%2f11%2fthumbnail-placeholder-500x334.jpg&ehk=6mynfmrw2mIh5dlQYM8Tv05IgOruDa3JOaJMJnvs0Yg%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1')"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ project.title }}</h5>
+        <h6 class="card-text">{{ formatUploadDate(project.uploadDate) }}</h6>
         <a class="card-text" data-bs-toggle="collapse" :href="'#slides' + project.id"
           :aria-controls="'slides' + project.id" role="button" aria-expanded="false">
           {{ project.slides.length }} Sildes
@@ -87,6 +99,40 @@ export default {
         }
       });
     },
+    formatUploadDate(uploadDate) {
+      const currentDate = new Date();
+      const uploadDateTime = new Date(uploadDate);
+
+      // Check if the uploadDate is today
+      if (
+        uploadDateTime.getDate() === currentDate.getDate() &&
+        uploadDateTime.getMonth() === currentDate.getMonth() &&
+        uploadDateTime.getFullYear() === currentDate.getFullYear()
+      ) {
+        // If it's today, display time only
+        const hours = uploadDateTime.getHours();
+        const minutes = uploadDateTime.getMinutes();
+        return `Today, ${hours}:${minutes}`;
+      }
+
+      // Check if the uploadDate is yesterday
+      const yesterday = new Date(currentDate);
+      yesterday.setDate(currentDate.getDate() - 1);
+      if (
+        uploadDateTime.getDate() === yesterday.getDate() &&
+        uploadDateTime.getMonth() === yesterday.getMonth() &&
+        uploadDateTime.getFullYear() === yesterday.getFullYear()
+      ) {
+        // If it's yesterday, display "Yesterday" and time
+        const hours = uploadDateTime.getHours();
+        const minutes = uploadDateTime.getMinutes();
+        return `Yesterday, ${hours}:${minutes}`;
+      }
+
+      // If it's neither today nor yesterday, display date and time
+      const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" };
+      return uploadDateTime.toLocaleDateString(undefined, options);
+    },
 
     async delProject() {
       if (this.delId) {
@@ -94,13 +140,17 @@ export default {
         this.getData()
       }
     },
-    async getData() {
-      const res = await fetch(this.host + "/getProjectsInfo.php");
+    async getData(sortBy) {
+      const res = await fetch(this.host + ((sortBy != undefined) ? ("/getProjectsInfo.php?sortby=" + sortBy) : ("/getProjectsInfo.php")));
       const projects = await res.json();
       this.projects = projects;
       this.username = document.getElementById('username') && document.getElementById('username').innerText;
 
+    },
+    sortProjects(sortBy) {
+      this.getData(sortBy);
     }
+
   }
 }
 </script>
@@ -109,6 +159,13 @@ export default {
 .tutorialCard {
   margin: 20px;
   margin-bottom: auto;
+}
+
+.tutorialCard img{
+  margin: auto;
+  margin-top: 10px;
+  border: 1px solid grey;
+
 }
 
 .tutorialsGrid {

@@ -2,7 +2,10 @@
   <main v-if="project.title" class="notranslate">
     <div id="google_translate_element"></div>
     <div id="content">
-      <aside>{{ project.title }}
+      <aside>
+        <div>
+          <div id="projectThumb" v-if="project.thumbnailUrl"><img :src="this.host+'/'+project.thumbnailUrl" alt="thumbnail"></div>
+          {{ project.title }}</div>
         <ThumbList :project=project @onSlideSelect="(i) => activeSlide = i" />
       </aside>
 
@@ -62,6 +65,10 @@ export default {
 
 aside {
   min-width: max-content;
+}
+
+#projectThumb img{
+  max-width: 150px;
 }
 </style>
   
