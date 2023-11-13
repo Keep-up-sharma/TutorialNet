@@ -37,7 +37,8 @@
     <div
       v-for="project in projects.filter((project) => ((project.category == selectedCategory) || (selectedCategory == 'all')) && JSON.stringify(project).toLocaleLowerCase().includes(filterQuery.toLocaleLowerCase()))"
       class="card tutorialCard" style="width: 18rem;">
-      <div v-if="username == project.creator" class="modifyButtons"><button class="btn primary-btn" @click="currProject = project" data-bs-toggle="modal" data-bs-target="#projectEditModal">✏️</button><button
+      <div v-if="username == project.creator" class="modifyButtons"><button class="btn primary-btn"
+          @click="currProject = project" data-bs-toggle="modal" data-bs-target="#projectEditModal">✏️</button><button
           data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn primary-btn"
           @click="() => delId = project.id">✖️</button></div>
       <img
@@ -71,7 +72,7 @@ export default {
       'loggedIn': document.cookie ? true : false,
       'username': '',
       'delId': '',
-      'currProject':{}
+      'currProject': {}
     }
   },
   components: { EditProjectForm },
@@ -117,6 +118,13 @@ export default {
 #catPills {
   max-width: 95vw;
   overflow: scroll;
+  flex-wrap: nowrap;
+  scrollbar-width: none;
+}
+
+
+#catPills::-webkit-scrollbar {
+  display: none;
 }
 
 .modifyButtons {
@@ -130,5 +138,10 @@ export default {
 
 .modifyButtons button {
   padding: 10px;
+}
+
+.nav-item {
+  margin: 10px;
+  white-space: nowrap;
 }
 </style>
