@@ -1,6 +1,5 @@
 <template>
-  <div id="app">{{ id }} lol</div>
-  <main class="notranslate">
+  <main v-if="project.title" class="notranslate">
     <div id="google_translate_element"></div>
     <div id="content">
       <aside>{{ project.title }}
@@ -30,6 +29,16 @@ import ThumbList from "../components/ThumbList.vue";
 import HomeNavBar from '../components/HomeNavBar.vue'
 export default {
   components: { ThumbList, Slide, HomeNavBar },
+  data() {
+    this.getData();
+    return {
+      'project':
+      {
+      },
+      "activeSlide": 1
+
+    }
+  },
   methods: {
     async getData() {
       const res = await fetch(this.host + "/getProject.php?id=" + this.$route.query.id);
@@ -39,17 +48,8 @@ export default {
       }
       this.project = project;
     },
-    data() {
-      this.getData();
-      return {
-        'project':
-        {
-        },
-        "activeSlide": 1
-
-      }
-    }
   }
+
 }
 </script>
   

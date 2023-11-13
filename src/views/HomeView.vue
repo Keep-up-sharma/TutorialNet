@@ -21,7 +21,7 @@ export default {
 
 <style scoped> form{
   max-width: 250px;
-  position: fixed;
+  position: absolute;
   top: 15px;
   right: 100px;
 }</style>
