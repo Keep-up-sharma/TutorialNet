@@ -4,14 +4,14 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <input type="text" class="modal-title" id="slideModalLabel" placeholder="Add Title" required/>
+                        <input type="text" class="modal-title" id="slideModalLabel" placeholder="Add Title" required />
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div id="editor" class="summernote">
-                        </div>
+                        <textarea id="editor" class="summernote">
+                        </textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -25,11 +25,19 @@
 
 <script>
 export default {
+    mounted() {
+        $('.summernote').summernote();
+
+        let toggles = document.getElementsByClassName('dropdown-toggle');
+        for (const id in toggles) {
+            toggles[id].setAttribute('data-bs-toggle', toggles[id].getAttribute('data-toggle'));
+        }
+    },
     props: ['id', 'num'],
     methods: {
         async saveSlide(e) {
             e.preventDefault();
-            
+
             let formData = new FormData();
             formData.append('title', document.getElementById("slideModalLabel").value);
             formData.append('projectId', this.id);
@@ -40,7 +48,7 @@ export default {
                 {
                     body: formData,
                     method: "post",
-                    credentials:"include"
+                    credentials: "include"
                 });
             console.log(await res.json());
             location.reload();

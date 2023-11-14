@@ -4,12 +4,15 @@
             {{ slide.title }}
         </div>
     </div>
+    <div v-if="(project.creator == username)">
+        <button class="btn btn-success notranslate" data-bs-toggle="modal" data-bs-target="#myModal">Add Slide</button>
+      </div>
 </template>
 
 
 <script>
 export default {
-    props: ["project"],
+    props: ["project","username"],
     emits:["onSlideSelect"]
 }
 </script>

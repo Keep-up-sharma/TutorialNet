@@ -1,7 +1,4 @@
 <template>
-  <div v-if="(project.creator == username)">
-    <button data-bs-toggle="modal" data-bs-target="#myModal">Add Slide</button>
-  </div>
   <AddSlideForm :id="project.id"
     :num="(project.slides.length < 1) ? 1 : (project.slides[project.slides.length - 1].num+1)" />
   <main v-if="project.title" class="notranslate">
@@ -12,7 +9,7 @@
               alt="thumbnail"></div>
           {{ project.title }}
         </div>
-        <ThumbList :project=project @onSlideSelect="(i) => activeSlide = i" />
+        <ThumbList :project=project @onSlideSelect="(i) => activeSlide = i" :username="username" />
       </aside>
 
       <div id="slidesCrousel" class="carousel slide" data-bs-ride="carousel">
@@ -36,9 +33,6 @@ import HomeNavBar from '../components/HomeNavBar.vue'
 import AddSlideForm from '../components/AddSlideForm.vue'
 export default {
   components: { ThumbList, Slide, HomeNavBar, AddSlideForm },
-  mounted() {
-    $('.summernote').summernote();
-  },
   data() {
     this.getData();
     return {

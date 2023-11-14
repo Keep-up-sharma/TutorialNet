@@ -1,19 +1,61 @@
 <template>
-    <div class="slide translate" ref="thisSlide" v-html="slide.content" @click="speak">
-        
+    <div class="slide translate" ref="thisSlide" v-html="slide.content" @click="toggleSpeech">
     </div>
+    <div class="btn-group" role="group" aria-label="Text-to-Speech Controls">
+        <button class="btn btn-primary" @click="play">Play</button>
+        <button class="btn btn-secondary" @click="pause" :disabled="!isSpeaking">Pause</button>
+        <button class="btn btn-success" @click="resume" :disabled="!isPaused">Resume</button>
+    </div>
+    
 </template>
-
+  
 <script>
 export default {
     props: ["slide"],
-    mounted() {
-        speechSynthesis.getVoices()
+    data() {
+        return {
+            isSpeaking: false,
+            isPaused: false,
+            utterance: null,
+        };
     },
-    emits: "speakingDone",
+    mounted() {
+        this.initializeVoices();
+    },
+    emits: ["speakingDone"],
     methods: {
-        speak() {
-            let utterance = new SpeechSynthesisUtterance(this.$refs.thisSlide.innerText);
+        initializeVoices() {
+            // Fetch and initialize voices when the component is mounted
+            speechSynthesis.getVoices();
+        },
+        play() {
+            this.isSpeaking = true;
+            this.isPaused = false;
+            this.utterance = new SpeechSynthesisUtterance(this.$refs.thisSlide.innerText);
+            this.setVoice();
+            speechSynthesis.speak(this.utterance);
+            this.utterance.addEventListener("end", this.handleEnd);
+        },
+        pause() {
+            if (this.isSpeaking && !this.isPaused) {
+                speechSynthesis.pause();
+                this.isPaused = true;
+            }
+        },
+        resume() {
+            if (this.isSpeaking && this.isPaused) {
+                speechSynthesis.resume();
+                this.isPaused = false;
+            }
+        },
+        toggleSpeech() {
+            if (this.isSpeaking) {
+                this.pause();
+            } else {
+                this.play();
+            }
+        },
+        setVoice() {
             try {
                 let currLanguage;
                 if (document.getElementsByClassName("goog-te-combo").length > 0)
@@ -22,7 +64,7 @@ export default {
                 let voiceAvailable = false;
                 for (let voice of speechSynthesis.getVoices()) {
                     if (voice.name.toLowerCase().includes(currLanguage)) {
-                        utterance.voice = voice;
+                        this.utterance.voice = voice;
                         voiceAvailable = true;
                     }
                 }
@@ -30,15 +72,15 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-            speechSynthesis.speak(utterance);
-
-            utterance.addEventListener("end", () => this.$emit("speakingDone"));
-
-        }
-    }
-}
+        },
+        handleEnd() {
+            this.isSpeaking = false;
+            this.$emit("speakingDone");
+        },
+    },
+};
 </script>
-
+  
 <style scoped>
 .slide {
     background-color: white;
@@ -50,3 +92,4 @@ export default {
     font-size: 2em;
 }
 </style>
+  
