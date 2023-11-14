@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" @click="() => $router.push('/')">Home</a>
+                        <a class="nav-link active" aria-current="page" href="#" @click="navigateToHome">Home</a>
                     </li>
                     <li class="nav-item dropdown Hi" v-if="loggedIn">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -65,14 +65,21 @@ export default {
             this.deleteAllCookies();
             this.loggedIn = false;
             location.reload();
+        },
+        navigateToHome() {
+            this.$router.push('/');
+            setTimeout(() => {
+                location.reload();
+            }, 200);
         }
     }
 }
 </script>
 <style>
-.navbar{
+.navbar {
     min-width: 100vw;
 }
+
 .Hi.nav-item {
     margin: 4px;
 }
