@@ -63,7 +63,7 @@ export default {
         },
         logout() {
             this.deleteAllCookies();
-            this.loggedIn = false;
+            // this.loggedIn = false;
             location.reload();
         },
         navigateToHome() {

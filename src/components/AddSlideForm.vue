@@ -10,8 +10,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <textarea id="editor" class="summernote">
-                        </textarea>
+                        <div id="editor" class="summernote">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -42,7 +42,7 @@ export default {
             formData.append('title', document.getElementById("slideModalLabel").value);
             formData.append('projectId', this.id);
             formData.append('num', this.num);
-            formData.append('content', document.querySelector('.note-editable.card-block').innerHTML);
+            formData.append('content', document.querySelector('.note-editable').innerHTML);
 
             const res = await fetch(this.host + "/addSlide.php",
                 {

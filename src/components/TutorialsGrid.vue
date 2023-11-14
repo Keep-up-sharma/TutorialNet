@@ -55,7 +55,7 @@
         :src="project.thumbnailUrl.length > 0 ? (this.host + '/' + project.thumbnailUrl) : ('https://th.bing.com/th/id/R.d2ee4e314afa093265091bd73479f158?rik=fMXBIB231vht0g&riu=http%3a%2f%2fwww.kreilkamp.com%2fwp-content%2fuploads%2f2016%2f11%2fthumbnail-placeholder-500x334.jpg&ehk=6mynfmrw2mIh5dlQYM8Tv05IgOruDa3JOaJMJnvs0Yg%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1')"
         class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">{{ project.title }}</h5>
+        <h5 class="card-title translate">{{ project.title }}</h5>
         <h6 class="card-text">{{ formatUploadDate(project.uploadDate) }}</h6>
         <a class="card-text" data-bs-toggle="collapse" :href="'#slides' + project.id"
           :aria-controls="'slides' + project.id" role="button" aria-expanded="false">
