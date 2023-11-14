@@ -39,7 +39,7 @@ export default {
       'project':
       {
       },
-      'username': '',
+      'username': localStorage.getItem('username'),
       "activeSlide": 1
 
     }
@@ -52,7 +52,6 @@ export default {
         this.$router.push('/404')
       }
       this.project = project;
-      this.username = window.username;
     },
   }
 

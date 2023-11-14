@@ -20,7 +20,7 @@ export default {
       this.email = json.email;
       this.username = json.username;
       this.loggedIn = true;
-      window.username = this.username;
+      localStorage.setItem('username',this.username)
     }
   },
   data() {

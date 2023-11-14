@@ -64,6 +64,7 @@ export default {
         logout() {
             this.deleteAllCookies();
             // this.loggedIn = false;
+            localStorage.removeItem("username")
             location.reload();
         },
         navigateToHome() {

@@ -92,7 +92,7 @@ export default {
       'projects': [],
       'selectedCategory': 'all',
       'loggedIn': document.cookie ? true : false,
-      'username': '',
+      'username': localStorage.getItem('username'),
       'delId': '',
       'currProject': {},
       'limit': 5,
@@ -157,7 +157,6 @@ export default {
       const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit??10}&offset=${this.offset??5}${this.filterQuery && '&filter=%' + this.filterQuery+'%'}`);
       const projects = await res.json();
       this.projects = projects;
-      this.username = document.getElementById('username') && document.getElementById('username').innerText;
 
     },
     sortProjects(sortBy) {
