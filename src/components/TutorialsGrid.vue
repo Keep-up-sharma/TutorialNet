@@ -71,7 +71,7 @@
     </div>
   </div>
 
-  <div v-if="projects.length > 0">
+  <div class="projectPages" v-if="projects.length > 0">
     <ProjectPages :totalLength="projects[0].total" @page-change="(l, o) => {
       limit = l;
       offset = o;
@@ -212,5 +212,10 @@ export default {
 .nav-item {
   margin: 10px;
   white-space: nowrap;
+}
+
+.projectPages{
+  max-width: fit-content;
+  margin: auto;
 }
 </style>
