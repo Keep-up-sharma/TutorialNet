@@ -22,7 +22,7 @@
                             <li><a class="dropdown-item" @click="logout" href="#">Logout</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#projectModal" href="#">Add
+                    <li v-if="username" class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#projectModal" href="#">Add
                         Tutorial</a></li>
                     <li v-if="!loggedIn" class="nav-item">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
@@ -77,7 +77,7 @@ export default {
     position: absolute;
     min-height: 80px;
     min-width: 100vw;
-    z-index: 5;
+    z-index: 10;
 }
 
 .Hi.nav-item {

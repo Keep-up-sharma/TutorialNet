@@ -46,3 +46,10 @@ export default {
 
   <RouterView />
 </template>
+
+<style>
+body {
+  background-color:rgb(246, 243, 237);
+}
+
+</style>

@@ -28,7 +28,7 @@ export default {
     mounted() {
         $('.summernote').summernote();
 
-        let toggles = document.getElementsByClassName('dropdown-toggle');
+        let toggles = document.querySelectorAll('.summernote .dropdown-toggle');
         for (const id in toggles) {
             toggles[id].setAttribute('data-bs-toggle', toggles[id].getAttribute('data-toggle'));
         }

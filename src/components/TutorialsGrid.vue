@@ -1,15 +1,26 @@
 <template>
   <EditProjectForm :project="currProject" />
   <ul id="catPills" class="nav nav-pills">
-    <li class="nav-item">
+    <li class="dropdown nav-item">
+      <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="sortButton">
+        Sort
+      </button>
+      <ul class="dropdown-menu" id="sortDropDown">
+        <li><a class="dropdown-item" @click="sortProjects('date')" href="#">Date (Newest first)</a></li>
+        <li><a class="dropdown-item" @click="sortProjects('creator')" href="#">Creator (Ascending)</a></li>
+        <li><a class="dropdown-item" @click="sortProjects('name')" href="#">Name (Ascending)</a></li>
+      </ul>
+    </li>
+    <div id="scrollRight">
+    <div class="nav-item">
       <a class="nav-link" :class="{ active: selectedCategory == 'all' }" @pointerup="() => selectedCategory = 'all'"
         href="#">all</a>
-    </li>
-    <li v-for="cat in new Set(projects.map(p => p.category))" class="nav-item">
+    </div>
+    <div v-for="cat in new Set(projects.map(p => p.category))" class="nav-item">
       <a class="nav-link" @pointerup="() => selectedCategory = cat" :class="{ active: selectedCategory == cat }"
         href="#">{{
           cat }}</a>
-    </li>
+    </div></div>
   </ul>
 
   <!-- Modal -->
@@ -31,16 +42,7 @@
     </div>
   </div>
 
-  <div class="dropdown">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-      Sort
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" @click="sortProjects('date')" href="#">Date (Newest first)</a></li>
-      <li><a class="dropdown-item" @click="sortProjects('creator')" href="#">Creator (Ascending)</a></li>
-      <li><a class="dropdown-item" @click="sortProjects('name')" href="#">Name (Ascending)</a></li>
-    </ul>
-  </div>
+  
 
 
   <div class="notranslate row tutorialsGrid">
@@ -154,7 +156,7 @@ export default {
       }
     },
     async getData(sortBy) {
-      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit??10}&offset=${this.offset??5}${this.filterQuery && '&filter=%' + this.filterQuery+'%'}`);
+      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit ?? 10}&offset=${this.offset ?? 5}${this.filterQuery && '&filter=%' + this.filterQuery + '%'}`);
       const projects = await res.json();
       this.projects = projects;
 
@@ -185,15 +187,22 @@ export default {
 }
 
 #catPills {
-  max-width: 95vw;
-  overflow: scroll;
-  flex-wrap: nowrap;
+  max-width: 100vw;
   scrollbar-width: none;
+  background-color: white;
 }
 
+#catPills li a {
+  border-radius: 0px;
+}
 
 #catPills::-webkit-scrollbar {
   display: none;
+}
+#scrollRight{
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: scroll;
 }
 
 .modifyButtons {
@@ -214,7 +223,7 @@ export default {
   white-space: nowrap;
 }
 
-.projectPages{
+.projectPages {
   max-width: fit-content;
   margin: auto;
 }

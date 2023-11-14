@@ -7,7 +7,7 @@
         <div>
           <div id="projectThumb" v-if="project.thumbnailUrl"><img :src="this.host + '/' + project.thumbnailUrl"
               alt="thumbnail"></div>
-          {{ project.title }}
+          <div id="title">{{ project.title }}</div>
         </div>
         <ThumbList :project=project @onSlideSelect="(i) => activeSlide = i" :username="username" />
       </aside>
@@ -66,7 +66,20 @@ export default {
 }
 
 aside {
+  text-align: center;
+  margin-block: 20px;
   min-width: max-content;
+}
+
+aside img{
+  min-width: 100%;
+  max-height: 100px;
+  border-radius: 20px 20px 0px 0px;
+}
+
+aside #title{
+  background-color:rgba(137, 43, 226, 0.307);
+  padding: 5px;
 }
 
 #projectThumb img {

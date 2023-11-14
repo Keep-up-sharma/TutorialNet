@@ -20,6 +20,7 @@ export default {
 <style scoped>
 
 .thumblist{
+    max-width: 200px;
     max-height: 70vh;
     justify-content: space-around;
     overflow: scroll;
@@ -27,13 +28,14 @@ export default {
 
 .projectThumb {
     flex: 1;
-    min-width: 200px;
-    max-width: 200px;
+    min-width: 90%;
+    max-width: 90%;
+    border: 1px solid black;
     padding: 6px;
     margin: 10px;
     text-align:center;
     max-height: 80px;
-    background-color: aqua;
+    background-color: white;
     border-radius: 0px 20px;
 
 }
