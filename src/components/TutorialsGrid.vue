@@ -85,8 +85,9 @@ import { offset } from '@popperjs/core';
 import EditProjectForm from './EditProjectForm.vue';
 import ProjectPages from './ProjectPages.vue';
 export default {
-  beforeMount() { this.getData(); },
+  mounted() { this.getData(); },
   data() {
+    this.getData();
     return {
       'projects': [],
       'selectedCategory': 'all',
@@ -153,7 +154,7 @@ export default {
       }
     },
     async getData(sortBy) {
-      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit}&offset=${this.offset}${this.filterQuery && '&filter=%' + this.filterQuery+'%'}`);
+      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit??10}&offset=${this.offset??5}${this.filterQuery && '&filter=%' + this.filterQuery+'%'}`);
       const projects = await res.json();
       this.projects = projects;
       this.username = document.getElementById('username') && document.getElementById('username').innerText;

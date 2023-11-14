@@ -1,12 +1,15 @@
 <template>
-    <div class="slide translate" ref="thisSlide" @click="speak">
-        {{ slide.content }}
+    <div class="slide translate" ref="thisSlide" v-html="slide.content" @click="speak">
+        
     </div>
 </template>
 
 <script>
 export default {
     props: ["slide"],
+    mounted() {
+        speechSynthesis.getVoices()
+    },
     emits: "speakingDone",
     methods: {
         speak() {
@@ -25,6 +28,7 @@ export default {
                 }
 
             } catch (error) {
+                console.log(error);
             }
             speechSynthesis.speak(utterance);
 
@@ -37,8 +41,9 @@ export default {
 
 <style scoped>
 .slide {
-    background-color: aqua;
-    min-height: 80vh;
+    background-color: white;
+    border: 1px solid grey;
+    min-height: 70vh;
     min-width: 65vw;
     margin: 30px;
     border-radius: 5px;

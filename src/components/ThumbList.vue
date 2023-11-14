@@ -1,5 +1,5 @@
 <template>
-    <div class="thumblist">
+    <div class="thumblist translate">
         <div class="projectThumb" v-for="slide in project.slides" data-bs-target="#slidesCrousel" :data-bs-slide-to="slide.num">
             {{ slide.title }}
         </div>

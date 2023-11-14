@@ -16,7 +16,7 @@
                     <li class="nav-item dropdown Hi" v-if="loggedIn">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Hi <div id="username">{{ name }}</div>
+                            Hi <div id="username">{{ username }}</div>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#projectModal" href="#">Add
@@ -70,6 +70,9 @@ export default {
 }
 </script>
 <style>
+.navbar{
+    min-width: 100vw;
+}
 .Hi.nav-item {
     margin: 4px;
 }
