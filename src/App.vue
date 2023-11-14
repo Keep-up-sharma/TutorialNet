@@ -20,13 +20,13 @@ export default {
       this.email = json.email;
       this.username = json.username;
       this.loggedIn = true;
-      localStorage.setItem('username',this.username)
+      localStorage.setItem('username', this.username)
     }
   },
   data() {
     if (document.cookie) this.setUserData();
     return {
-       'loggedIn': false,
+      'loggedIn': false,
       'name': '',
       'username': '',
       'email': '',
@@ -37,9 +37,12 @@ export default {
 </script>
 <template>
   <header>
-    
-  <HomeNavBar :name="name" :email="email" :username="username" :loggedIn="loggedIn" @login="setUserData"/>
+
+    <HomeNavBar :name="name" :email="email" :username="username" :loggedIn="loggedIn" @login="setUserData" />
   </header>
-  
+  <br />
+  <br />
+  <br />
+
   <RouterView />
 </template>

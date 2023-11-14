@@ -1,5 +1,4 @@
 <template>
-  <br>
   <form class="d-flex">
     <input class="form-control me-2" type="search" placeholder="Search" @input="(e) => { filterQuery = e.target.value }"
       aria-label="Search">
