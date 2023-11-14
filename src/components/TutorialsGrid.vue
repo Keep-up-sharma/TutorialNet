@@ -13,12 +13,12 @@
     </li>
     <div id="scrollRight">
       <div class="nav-item">
-        <a class="nav-link" :class="{ active: selectedCategory == 'all' }" @pointerup="() => selectedCategory = 'all'"
-          href="#">all</a>
+        <a class="nav-link" :class="{ active: selectedCategory == 'all' }"
+          @pointerup="() => { selectedCategory = 'all'; getData() }" href="#">all</a>
       </div>
       <div v-for="cat in new Set(projects.map(p => p.category))" class="nav-item">
-        <a class="nav-link" @pointerup="() => selectedCategory = cat" :class="{ active: selectedCategory == cat }"
-          href="#">{{
+        <a class="nav-link" @pointerup="() => { selectedCategory = cat; getData() }"
+          :class="{ active: selectedCategory == cat }" href="#">{{
             cat }}</a>
       </div>
     </div>
@@ -47,9 +47,7 @@
 
 
   <div class="notranslate row tutorialsGrid">
-    <div
-      v-for="project in projects.filter((project) => ((project.category == selectedCategory) || (selectedCategory == 'all')))"
-      class="card tutorialCard" style="width: 18rem;">
+    <div v-for="project in projects" class="card tutorialCard" style="width: 18rem;">
       <div v-if="username == project.creator" class="modifyButtons"><button class="btn primary-btn"
           @click="currProject = project" data-bs-toggle="modal" data-bs-target="#projectEditModal">✏️</button><button
           data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn primary-btn"
@@ -157,7 +155,7 @@ export default {
       }
     },
     async getData(sortBy) {
-      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit ?? 10}&offset=${this.offset ?? 5}${this.filterQuery && '&filter=%' + this.filterQuery + '%'}`);
+      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit ?? 10}&offset=${this.offset ?? 5}${this.filterQuery && '&filter=%' + this.filterQuery + '%'}${(this.selectedCategory != 'All') && '&category=' + this.selectedCategory}`);
       const projects = await res.json();
       this.projects = projects;
 
@@ -230,4 +228,5 @@ export default {
 .projectPages {
   max-width: fit-content;
   margin: auto;
-}</style>
+}
+</style>
