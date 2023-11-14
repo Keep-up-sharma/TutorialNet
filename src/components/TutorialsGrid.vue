@@ -12,15 +12,16 @@
       </ul>
     </li>
     <div id="scrollRight">
-    <div class="nav-item">
-      <a class="nav-link" :class="{ active: selectedCategory == 'all' }" @pointerup="() => selectedCategory = 'all'"
-        href="#">all</a>
+      <div class="nav-item">
+        <a class="nav-link" :class="{ active: selectedCategory == 'all' }" @pointerup="() => selectedCategory = 'all'"
+          href="#">all</a>
+      </div>
+      <div v-for="cat in new Set(projects.map(p => p.category))" class="nav-item">
+        <a class="nav-link" @pointerup="() => selectedCategory = cat" :class="{ active: selectedCategory == cat }"
+          href="#">{{
+            cat }}</a>
+      </div>
     </div>
-    <div v-for="cat in new Set(projects.map(p => p.category))" class="nav-item">
-      <a class="nav-link" @pointerup="() => selectedCategory = cat" :class="{ active: selectedCategory == cat }"
-        href="#">{{
-          cat }}</a>
-    </div></div>
   </ul>
 
   <!-- Modal -->
@@ -42,7 +43,7 @@
     </div>
   </div>
 
-  
+
 
 
   <div class="notranslate row tutorialsGrid">
@@ -190,16 +191,19 @@ export default {
   max-width: 100vw;
   scrollbar-width: none;
   background-color: white;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 #catPills li a {
   border-radius: 0px;
 }
 
-#catPills::-webkit-scrollbar {
+#catPills ::-webkit-scrollbar {
   display: none;
 }
-#scrollRight{
+
+#scrollRight {
   display: flex;
   flex-wrap: nowrap;
   overflow: scroll;
@@ -226,5 +230,4 @@ export default {
 .projectPages {
   max-width: fit-content;
   margin: auto;
-}
-</style>
+}</style>
