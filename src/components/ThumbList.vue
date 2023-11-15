@@ -20,7 +20,7 @@ export default {
 <style scoped>
 
 .thumblist{
-    max-width: 200px;
+    max-width: 400px;
     max-height: 70vh;
     justify-content: space-around;
     overflow: scroll;

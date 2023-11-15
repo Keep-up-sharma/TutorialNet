@@ -1,6 +1,6 @@
 <template>
   <AddSlideForm :id="project.id"
-    :num="(project.slides.length < 1) ? 1 : (project.slides[project.slides.length - 1].num+1)" />
+    :num="(!project.slides || project.slides.length < 1) ? 1 : (project.slides[project.slides.length - 1].num + 1)" />
   <main v-if="project.title" class="notranslate">
     <div id="content">
       <aside>
@@ -71,14 +71,14 @@ aside {
   min-width: max-content;
 }
 
-aside img{
+aside img {
   min-width: 100%;
   max-height: 100px;
   border-radius: 20px 20px 0px 0px;
 }
 
-aside #title{
-  background-color:rgba(137, 43, 226, 0.307);
+aside #title {
+  background-color: rgba(137, 43, 226, 0.307);
   padding: 5px;
 }
 

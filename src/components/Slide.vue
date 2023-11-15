@@ -1,12 +1,13 @@
 <template>
-    <div class="slide translate" ref="thisSlide" v-html="slide.content" @click="toggleSpeech">
+    <div>
+        <div class="slide translate" ref="thisSlide" v-html="slide.content" @click="toggleSpeech">
+        </div>
+        <div class="btn-group" role="group" aria-label="Text-to-Speech Controls">
+            <button class="btn btn-primary" @click="play">Play</button>
+            <button class="btn btn-secondary" @click="pause" :disabled="!isSpeaking">Pause</button>
+            <button class="btn btn-success" @click="resume" :disabled="!isPaused">Resume</button>
+        </div>
     </div>
-    <div class="btn-group" role="group" aria-label="Text-to-Speech Controls">
-        <button class="btn btn-primary" @click="play">Play</button>
-        <button class="btn btn-secondary" @click="pause" :disabled="!isSpeaking">Pause</button>
-        <button class="btn btn-success" @click="resume" :disabled="!isPaused">Resume</button>
-    </div>
-    
 </template>
   
 <script>

@@ -30,7 +30,7 @@ export default {
 
         let toggles = document.querySelectorAll('.summernote .dropdown-toggle');
         for (const id in toggles) {
-            toggles[id].setAttribute('data-bs-toggle', toggles[id].getAttribute('data-toggle'));
+            toggles[id].setAttribute && toggles[id].setAttribute('data-bs-toggle', toggles[id].getAttribute('data-toggle'));
         }
     },
     props: ['id', 'num'],
