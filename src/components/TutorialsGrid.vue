@@ -155,7 +155,22 @@ export default {
       }
     },
     async getData(sortBy) {
-      const res = await fetch(`${this.host}${sortBy !== undefined ? `/getProjectsInfo.php?sortby=${sortBy}&` : '/getProjectsInfo.php?'}limit=${this.limit ?? 10}&offset=${this.offset ?? 5}${this.filterQuery && '&filter=%' + this.filterQuery + '%'}${(this.selectedCategory != 'All') && '&category=' + this.selectedCategory}`);
+      let url = `${this.host}/getProjectsInfo.php?`;
+      if (sortBy !== undefined) {
+        url += `sortby=${sortBy}&`;
+      } else {
+        url += 'sortby=&';
+      }
+      url += `limit=${this.limit ?? 10}&offset=${this.offset ?? 5}`;
+      if (this.filterQuery) {
+        url += `&filter=%${this.filterQuery}%`;
+      }
+      if (this.selectedCategory && this.selectedCategory != 'all') {
+        url += `&category=${this.selectedCategory}`;
+      }
+
+      const res = await fetch(url);
+
       const projects = await res.json();
       this.projects = projects;
 
