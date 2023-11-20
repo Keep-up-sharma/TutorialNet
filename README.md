@@ -1,22 +1,24 @@
 
-## Documentation
+# TutorialNet
 
-## Frontend Configuration:
+## Setup
 
-### 1. Clone the Frontend Repository:
+### Frontend Configuration:
+
+#### 1. Clone the Frontend Repository:
 
 ```bash
 git clone https://github.com/Keep-up-sharma/TutorialNet.git
 cd TutorialNet
 ```
 
-### 2. Install Dependencies:
+#### 2. Install Dependencies:
 
 ```bash
 npm install
 ```
 
-### 3. Configure Backend URL:
+#### 3. Configure Backend URL:
 
 Open the file `src/main.js` and find the line that starts with `app.config.globalProperties.host`. Replace the URL inside the single quotes with your backend URL:
 
@@ -24,7 +26,7 @@ Open the file `src/main.js` and find the line that starts with `app.config.globa
 app.config.globalProperties.host = 'http://localhost/TutoriaNetBackend/TutorialNetBackend';
 ```
 
-### 4. Run Development Server:
+#### 4. Run Development Server:
 
 ```bash
 npm run dev
@@ -32,7 +34,7 @@ npm run dev
 
 This starts the development server, and you can view your application at `http://localhost:PORT`.
 
-### 5. Build for Production:
+#### 5. Build for Production:
 
 ```bash
 npm run build
@@ -40,16 +42,16 @@ npm run build
 
 This command generates a `dist` folder containing the optimized production build.
 
-## Backend Configuration:
+### Backend Configuration:
 
-### 1. Clone the Backend Repository:
+#### 1. Clone the Backend Repository:
 
 ```bash
 git clone https://github.com/Keep-up-sharma/TutorialNetBackend.git
 cd TutorialNetBackend
 ```
 
-### 2. Configure Frontend URL:
+#### 2. Configure Frontend URL:
 
 Open the file `config.php` and find the line with `define('CLIENT_URL', 'http://your-frontend-url');`. Replace the URL inside the single quotes with your frontend URL:
 
@@ -57,45 +59,45 @@ Open the file `config.php` and find the line with `define('CLIENT_URL', 'http://
 define('CLIENT_URL', 'http://your-frontend-url');
 ```
 
-### 3. Configure Apache:
+#### 3. Configure Apache:
 
 Make sure your Apache server is set up to serve the backend. Confirm that the `DocumentRoot` points to the backend's public directory.
 
-### 4. Start Apache:
+#### 4. Start Apache:
 
 Start or restart your Apache server.
 
-## Importing Database via phpMyAdmin:
+### Importing Database via phpMyAdmin:
 
-### 1. Access phpMyAdmin:
+#### 1. Access phpMyAdmin:
 
 Navigate to `http://localhost/phpmyadmin` in your web browser.
 
-### 2. Log in:
+#### 2. Log in:
 
 Log in to phpMyAdmin with your credentials.
 
-### 3. Create Database:
+#### 3. Create Database:
 
 Create a new database for your TutorialNet application if not already created.
 
-### 4. Import SQL File:
+#### 4. Import SQL File:
 
 - Go to the "Import" tab.
 - Click "Choose File" and select `TutorialNetBackend/database/tutorials.sql`.
 - Click "Go" to execute the import.
 
-### 5. Verification:
+#### 5. Verification:
 
 Check that the `tutorials` table and other required tables are present in your database.
 
-## Creating MySQL User and Editing Database Configuration:
+### Creating MySQL User and Editing Database Configuration:
 
-### 1. Access MySQL:
+#### 1. Access MySQL:
 
 Log in to your MySQL server using a MySQL client or the command line.
 
-### 2. Create User:
+#### 2. Create User:
 
 Replace 'new_user' and 'password' with your desired username and password:
 
@@ -103,7 +105,7 @@ Replace 'new_user' and 'password' with your desired username and password:
 CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
 ```
 
-### 3. Grant Privileges:
+#### 3. Grant Privileges:
 
 Grant privileges on the `tutorials` database:
 
@@ -111,7 +113,7 @@ Grant privileges on the `tutorials` database:
 GRANT ALL PRIVILEGES ON tutorials.* TO 'new_user'@'localhost';
 ```
 
-### 4. Flush Privileges:
+#### 4. Flush Privileges:
 
 Flush privileges to apply the changes:
 
@@ -119,11 +121,11 @@ Flush privileges to apply the changes:
 FLUSH PRIVILEGES;
 ```
 
-### 5. Edit `db_connect.php`:
+#### 5. Edit `db_connect.php`:
 
 Open the `db_connect.php` file in the backend directory.
 
-### 6. Update Database Configuration:
+#### 6. Update Database Configuration:
 
 Update the database configuration with the MySQL user credentials:
 
@@ -133,13 +135,13 @@ define('DB_USER', 'new_user');
 define('DB_PASS', 'password');
 ```
 
-### 7. Save Changes:
+#### 7. Save Changes:
 
 Save the changes to the `db_connect.php` file.
 
-## Running the Application:
+### Running the Application:
 
-### Frontend:
+#### Frontend:
 
 To run the frontend in development mode:
 
@@ -149,11 +151,11 @@ npm run dev
 
 Access the application at `http://localhost:PORT`.
 
-### Backend:
+#### Backend:
 
 Ensure your Apache server is running to serve the backend.
 
-## Troubleshooting:
+### Troubleshooting:
 
 - **Frontend Issues:**
   - Check the browser console for error messages.
