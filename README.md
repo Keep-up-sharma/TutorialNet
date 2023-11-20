@@ -45,7 +45,7 @@
 2. **Configure Frontend URL:**
    Open `config.php` and add your frontend URL to the allowed origins.
    ```php
-   header('Access-Control-Allow-Origin: http://your-frontend-url');
+   define('CLIENT_URL', 'http://your-frontend-url');
    ```
 
 3. **Configure Apache:**
