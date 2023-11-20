@@ -19,8 +19,8 @@
             </div>
             <div class="mb-3">
               <label for="description" class="form-label">Category </label>
-              <select name="category" class="form-select" id="category">
-                <option v-for="cat in categories" :value="cat.name">{{ cat.name }}</option>
+              <select name="category_id" class="form-select" id="category">
+                <option v-for="cat in categories" :value="cat.id">{{ cat.name }}</option>
               </select>
             </div>
             <div class="mb-3">

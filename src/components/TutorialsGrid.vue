@@ -156,10 +156,10 @@ export default {
     },
     async getData(sortBy) {
       let url = `${this.host}/getProjectsInfo.php?`;
-      if (sortBy !== undefined) {
+      if (sortBy) {
         url += `sortby=${sortBy}&`;
       } else {
-        url += 'sortby=&';
+        url += '';
       }
       url += `limit=${this.limit ?? 10}&offset=${this.offset ?? 5}`;
       if (this.filterQuery) {
