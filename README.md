@@ -61,7 +61,7 @@
      ```bash
      npm run dev
      ```
-   - Access the application at `http://localhost:3000`.
+   - Access the application at `http://localhost:PORT`.
 
 2. **Backend:**
    - Ensure your Apache server is running to serve the backend.
