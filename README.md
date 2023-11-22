@@ -3,7 +3,7 @@
 # Multilingual Tutorial Content Management System (CMS)
 
 ## Demo
-A demo is available here(https://tutorialnetdemo.000webhostapp.com/)
+A demo is available [here](https://tutorialnetdemo.000webhostapp.com/)
 ## Overview
 This repository contains the code for a Multilingual Tutorial Content Management System (CMS). The CMS is designed to manage, generate, and present tutorials in a user-friendly manner, addressing issues related to global accessibility of educational tutorials.
 
