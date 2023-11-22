@@ -13,27 +13,28 @@ export default {
   components: { HomeNavBar },
   methods: {
     async setUserData() {
-
-      const res = await fetch(this.host + '/getUserInfo.php', { 'credentials': 'include' });
-      const json = await res.json();
-      this.name = json.name;
-      this.email = json.email;
-      this.username = json.username;
-      this.isModerator  = json.isModerator;
-      this.loggedIn = true;
-      localStorage.setItem('username', this.username)
-      localStorage.setItem('email', this.email)
-      localStorage.setItem('name', this.name)
-      localStorage.setItem('isModerator', this.isModerator)
+      if (!localStorage.getItem('username')) {
+        const res = await fetch(this.host + '/getUserInfo.php', { 'credentials': 'include' });
+        const json = await res.json();
+        this.name = json.name;
+        this.email = json.email;
+        this.username = json.username;
+        this.isModerator = json.isModerator;
+        this.loggedIn = true;
+        localStorage.setItem('username', this.username)
+        localStorage.setItem('email', this.email)
+        localStorage.setItem('name', this.name)
+        localStorage.setItem('isModerator', this.isModerator)
+      }
     }
   },
   data() {
     if (document.cookie) this.setUserData();
     return {
-      'loggedIn': false,
-      'name': '',
-      'username': '',
-      'email': '',
+      'loggedIn': localStorage.getItem('name'),
+      'name': localStorage.getItem('name'),
+      'username': localStorage.getItem('username'),
+      'email': localStorage.getItem('email'),
 
     }
   }
@@ -53,7 +54,6 @@ export default {
 
 <style>
 body {
-  background-color:rgb(246, 243, 237);
+  background-color: rgb(246, 243, 237);
 }
-
 </style>
