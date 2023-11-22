@@ -1,5 +1,21 @@
 
 # TutorialNet
+# Multilingual Tutorial Content Management System (CMS)
+
+## Overview
+This repository contains the code for a Multilingual Tutorial Content Management System (CMS). The CMS is designed to manage, generate, and present tutorials in a user-friendly manner, addressing issues related to global accessibility of educational tutorials.
+
+## Features
+- **User Roles**: The CMS supports two user roles - Admin and Moderator. Moderators can add, edit, and delete all tutorials, while Users can access and view tutorials in their preferred language (and add and edit their own).
+- **Database Structure**: The CMS features a robust database structure that efficiently stores tutorial content, including slides and images.
+- **Multilingual Support**: The CMS is capable of handling multilingual content effectively, making learning resources accessible to a global audience.
+- **Engaging Content**: The use of slides and images makes the tutorials more engaging and easier to understand.
+
+## Goal
+The goal of this project is to develop a CMS that provides an engaging and accessible learning platform for users worldwide. By leveraging PHP and various web development technologies, we aim to create a system that is robust, user-friendly, and capable of handling multilingual content effectively.
+
+## Contributing
+We welcome contributions!
 
 ## Setup
 
