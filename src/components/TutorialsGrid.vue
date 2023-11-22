@@ -48,7 +48,7 @@
 
   <div class="notranslate row tutorialsGrid">
     <div v-for="project in projects" class="card tutorialCard" style="width: 18rem;">
-      <div v-if="username == project.creator" class="modifyButtons"><button class="btn primary-btn"
+      <div v-if="isModerator || (username == project.creator)" class="modifyButtons"><button class="btn primary-btn"
           @click="currProject = project" data-bs-toggle="modal" data-bs-target="#projectEditModal">✏️</button><button
           data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn primary-btn"
           @click="() => delId = project.id">✖️</button></div>
@@ -94,6 +94,7 @@ export default {
       'selectedCategory': 'all',
       'loggedIn': document.cookie ? true : false,
       'username': localStorage.getItem('username'),
+      'isModerator': localStorage.getItem('isModerator'),
       'delId': '',
       'currProject': {},
       'limit': 5,

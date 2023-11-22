@@ -22,8 +22,9 @@
                             <li><a class="dropdown-item" @click="logout" href="#">Logout</a></li>
                         </ul>
                     </li>
-                    <li v-if="username" class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#projectModal" href="#">Add
-                        Tutorial</a></li>
+                    <li v-if="username" class="nav-item"><a class="nav-link" data-bs-toggle="modal"
+                            data-bs-target="#projectModal" href="#">Add
+                            Tutorial</a></li>
                     <li v-if="!loggedIn" class="nav-item">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     </li>
@@ -61,6 +62,9 @@ export default {
             this.deleteAllCookies();
             // this.loggedIn = false;
             localStorage.removeItem("username")
+            localStorage.removeItem('email')
+            localStorage.removeItem('name')
+            localStorage.removeItem('isModerator')
             location.reload();
         },
         navigateToHome() {

@@ -19,8 +19,12 @@ export default {
       this.name = json.name;
       this.email = json.email;
       this.username = json.username;
+      this.isModerator  = json.isModerator;
       this.loggedIn = true;
       localStorage.setItem('username', this.username)
+      localStorage.setItem('email', this.email)
+      localStorage.setItem('name', this.name)
+      localStorage.setItem('isModerator', this.isModerator)
     }
   },
   data() {
