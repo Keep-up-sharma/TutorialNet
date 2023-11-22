@@ -72,6 +72,7 @@ cd TutorialNetBackend
 #### 2. Configure Frontend URL:
 
 Open the file `config.php` and find the line with `define('CLIENT_URL', 'http://your-frontend-url');`. Replace the URL inside the single quotes with your frontend URL:
+Edit `db_connect.php` to add your username , password and database name
 
 ```php
 define('CLIENT_URL', 'http://your-frontend-url');
